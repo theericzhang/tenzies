@@ -1,38 +1,85 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Karla, sans-serif;
+}
+
 .App {
-  text-align: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.game-wrapper {
+    height: calc(2 * 379px);
+    width: calc(2 * 360px);
+    background-color: #0B2434;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.game {
+    width: calc(2 * 320px);
+    height: calc(2 * 320px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+    border-radius: calc(2 * 10px);
+    row-gap: calc(2 * 25.6px);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.dice-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: calc(2 * 17.92px);
+    row-gap: calc(2 * 17.92px);
 }
 
-.App-link {
-  color: #61dafb;
+.die {
+    width: calc(2 * 35.84px);
+    height: calc(2 * 35.84px);
+    background-color: #FFF;
+    border-radius: calc(2 * 3.81px);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.die:hover {
+    cursor: pointer;
+}
+
+#green {
+    background-color: #59E391;
+}
+
+.value {
+    font-family: Karla, sans-serif;
+    font-size: calc(2 * 1.28rem);
+}
+
+.roll {
+    width: calc(2 * 92.16px);
+    height: calc(2 * 35.84px);
+    background-color: rgba(80, 53, 255, 1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-family: Karla, sans-serif;
+    color: #FFF;
+    font-size: 2rem;
+    box-shadow: 0px 6.4px 15.36px rgba(0, 0, 0, 0.18);
+    border-radius: 3.81277px;
+    border: none;
 }
