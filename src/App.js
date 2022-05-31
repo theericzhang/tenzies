@@ -1,12 +1,18 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Dice from "./components/Dice.js"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
 function App() {
 
     const [dieValues, setDieValues] = useState(setUpArray())
+    const [gameState, setGameState] = useState(false)
+
+    useEffect(() => {
+        const isGameWon = dieValues.every(die => (die.value === dieValues[0].value) && (die.isToggled === true))
+        console.log(isGameWon)
+    },[dieValues])
 
     function setUpArray() {
         const newArray = []
@@ -59,6 +65,8 @@ function App() {
             ? {...die, isToggled : !die.isToggled}
             : die
         }))
+
+
         
         // imperatively
         // setDieValues(prevState => {
@@ -93,6 +101,8 @@ function App() {
         <div className="App">
             <main className="game-wrapper">
                 <section className="game">
+                    <h1 className="title">Tenzies</h1>
+                    <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
                     <div className="dice-container">
                         {diceSection}
                     </div>

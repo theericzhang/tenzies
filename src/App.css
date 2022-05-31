@@ -34,7 +34,17 @@ body {
     align-items: center;
     background-color: #F5F5F5;
     border-radius: calc(2 * 10px);
-    row-gap: calc(2 * 25.6px);
+    row-gap: calc(2 * 10px);
+}
+
+.title {
+    font-size: calc(2 * 25.6px);
+    margin: 0;
+}
+
+.instructions {
+    font-size: calc(2 * 13.11px);
+    padding: 0 calc(2 * 40px);
 }
 
 .dice-container {
@@ -82,4 +92,5 @@ body {
     box-shadow: 0px 6.4px 15.36px rgba(0, 0, 0, 0.18);
     border-radius: 3.81277px;
     border: none;
+    margin: 20px 0;
 }
