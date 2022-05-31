@@ -23,45 +23,64 @@ function App() {
     }
 
     function rollClickHandler() {
-        setDieValues(prevState => {
-            const tempArray = []
-            for (let i = 0; i < prevState.length; i++) {
-                prevState[i].isToggled
-                ? tempArray.push(prevState[i]) 
-                : tempArray.push(
-                    {
-                        value: Math.ceil(Math.random() * 6),
-                        isToggled: prevState[i].isToggled,
-                        id: nanoid()
-                    }
-                )
-            }
-            return(tempArray)
-        })
+        //declaratively
+        setDieValues(prevState => prevState.map(die => {
+            return die.isToggled 
+                   ? die 
+                   : {
+                       value: Math.ceil(Math.random() * 6),
+                       isToggled: false,
+                       id: nanoid()
+                   }
+        }))
+
+        //imperatively
+        // setDieValues(prevState => {
+        //     const tempArray = []
+        //     for (let i = 0; i < prevState.length; i++) {
+        //         prevState[i].isToggled
+        //         ? tempArray.push(prevState[i]) 
+        //         : tempArray.push(
+        //             {
+        //                 value: Math.ceil(Math.random() * 6),
+        //                 isToggled: prevState[i].isToggled,
+        //                 id: nanoid()
+        //             }
+        //         )
+        //     }
+        //     return(tempArray)
+        // })
     }
 
     function dieClickHandler(dieId) {
-        setDieValues(prevState => {
-            const tempArray = []
-            for (let i = 0; i < prevState.length; i++) {
-                i === dieId
-                ? tempArray.push(
-                    {
-                        value: prevState[i].value,
-                        isToggled: !prevState[i].isToggled,
-                        id: nanoid()
-                    })
-                : tempArray.push(prevState[i])
-            }
-            return(tempArray)
-        })
+        
+        setDieValues(prevState => prevState.map(die => {
+            return die.id === dieId 
+            ? {...die, isToggled : !die.isToggled}
+            : die
+        }))
+        
+        // imperatively
+        // setDieValues(prevState => {
+        //     const tempArray = []
+        //     for (let i = 0; i < prevState.length; i++) {
+        //         i === dieId
+        //         ? tempArray.push(
+        //             {
+        //                 value: prevState[i].value,
+        //                 isToggled: !prevState[i].isToggled,
+        //                 id: nanoid()
+        //             })
+        //         : tempArray.push(prevState[i])
+        //     }
+        //     return(tempArray)
+        // })
     }
 
-    const diceSection = dieValues.map((die, index) => {
+    const diceSection = dieValues.map((die) => {
         return (
             <Dice value={die.value} 
-                  clickHandler={dieClickHandler}
-                  index={index}
+                  clickHandler={() => dieClickHandler(die.id)}
                   isToggled={die.isToggled}
                   key={die.id}
             />
