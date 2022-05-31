@@ -3,6 +3,7 @@ import "./App.css";
 import Dice from "./components/Dice.js"
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
+import ReactConfetti from "react-confetti";
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
 
     useEffect(() => {
         const isGameWon = dieValues.every(die => (die.value === dieValues[0].value) && (die.isToggled === true))
-        console.log(isGameWon)
+        setGameState(isGameWon)
     },[dieValues])
 
     function setUpArray() {
@@ -101,12 +102,13 @@ function App() {
         <div className="App">
             <main className="game-wrapper">
                 <section className="game">
+                    {gameState && <ReactConfetti width="640px" height="640px" recycle={false}></ReactConfetti>}
                     <h1 className="title">Tenzies</h1>
                     <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
                     <div className="dice-container">
                         {diceSection}
                     </div>
-                    <button className="roll" onClick={rollClickHandler}>Roll</button>
+                    <button className="roll" onClick={gameState? () => setDieValues(setUpArray()) : rollClickHandler}>{gameState? "New Game" : "Roll"}</button>
                 </section>
             </main>
         </div>
