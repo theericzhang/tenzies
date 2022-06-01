@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Dice from "./components/Dice.js"
 import { useState, useEffect } from "react";
@@ -9,11 +8,33 @@ function App() {
 
     const [dieValues, setDieValues] = useState(setUpArray())
     const [gameState, setGameState] = useState(false)
+    const [numberofRolls, setNumberOfRolls] = useState(0)
+    const [isFirstPlay, setIsFirstPlay] = useState(true)
 
     useEffect(() => {
         const isGameWon = dieValues.every(die => (die.value === dieValues[0].value) && (die.isToggled === true))
         setGameState(isGameWon)
-    },[dieValues])
+
+        // is it your first play of the game? let's write to storage
+        // on every roll. If it's not your first time playing the game
+        // then we'll hold the 'rolls' to be compared with newer values
+        // in the else block. 
+        if (isFirstPlay) {
+            localStorage.setItem('rolls', numberofRolls)
+        } else {
+            const lastnumberOfRolls = localStorage.getItem('rolls')
+            if (isGameWon) {
+                if (numberofRolls < lastnumberOfRolls) {
+                    console.log("replacing with newer!")
+                    localStorage.setItem('rolls', numberofRolls)
+                }
+                else {
+                    console.log("keeping older!")
+                    localStorage.setItem('rolls', lastnumberOfRolls)
+                }
+            } else {localStorage.setItem('rolls', lastnumberOfRolls)}
+        }
+    },[dieValues, numberofRolls, isFirstPlay])
 
     function setUpArray() {
         const newArray = []
@@ -30,6 +51,10 @@ function App() {
     }
 
     function rollClickHandler() {
+        
+        setNumberOfRolls(prevRolls => prevRolls + 1)
+        console.log(numberofRolls)
+
         //declaratively
         setDieValues(prevState => prevState.map(die => {
             return die.isToggled 
@@ -108,7 +133,15 @@ function App() {
                     <div className="dice-container">
                         {diceSection}
                     </div>
-                    <button className="roll" onClick={gameState? () => setDieValues(setUpArray()) : rollClickHandler}>{gameState? "New Game" : "Roll"}</button>
+                    <button 
+                        className="roll" 
+                        onClick={gameState? () => {
+                            setDieValues(setUpArray())
+                            setNumberOfRolls(0)
+                            setIsFirstPlay(false)
+                        } : rollClickHandler}>
+                            {gameState? "New Game" : "Roll"}
+                    </button>
                 </section>
             </main>
         </div>
