@@ -23,19 +23,22 @@ function App() {
             localStorage.setItem('rolls', numberofRolls)
         } else {
             const lastnumberOfRolls = localStorage.getItem('rolls')
+            // checking to see if winning condition is satisfied to 
+            // compare the current value "numberofRolls" to the one in storage 
             if (isGameWon) {
                 if (numberofRolls < lastnumberOfRolls) {
-                    console.log("replacing with newer!")
                     localStorage.setItem('rolls', numberofRolls)
                 }
                 else {
-                    console.log("keeping older!")
                     localStorage.setItem('rolls', lastnumberOfRolls)
                 }
             } else {localStorage.setItem('rolls', lastnumberOfRolls)}
         }
     },[dieValues, numberofRolls, isFirstPlay])
 
+    // creating a brand new array of dice values containing properties of 
+    // numerical value, toggle (locked) status, and an id used for a key 
+    // and targeting to manipulate
     function setUpArray() {
         const newArray = []
         for (let i = 0; i < 10; i++) {
@@ -50,6 +53,9 @@ function App() {
         return newArray;
     }
 
+    // handles a click from the roll button element. we want to check if the
+    // die has been locked. if it has been locked, return the same die. 
+    // if not, then generate a completely new die in place
     function rollClickHandler() {
         
         setNumberOfRolls(prevRolls => prevRolls + 1)
@@ -84,6 +90,10 @@ function App() {
         // })
     }
 
+    // using a dieId (generated from nanoid), we can target a die
+    // by mapping over a previous state and seeing if each die has a
+    // .id property that matches the dieId. Then, we can toggle the 
+    // isToggled property to flag it as locked. 
     function dieClickHandler(dieId) {
         
         setDieValues(prevState => prevState.map(die => {
@@ -111,6 +121,7 @@ function App() {
         // })
     }
 
+    // rendering an array of <Dice> objects with props
     const diceSection = dieValues.map((die) => {
         return (
             <Dice value={die.value} 
