@@ -27,7 +27,7 @@ body {
 
 .game {
     width: calc(2 * 320px);
-    height: calc(2 * 320px);
+    height: calc(2 * 330px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,7 +45,9 @@ body {
 
 .instructions {
     font-size: calc(2 * 13.11px);
-    padding: 0 calc(2 * 40px);
+    padding: 0 calc(2 * 34px);
+    text-align: left;
+    margin-top: 0;
 }
 
 .dice-container {
@@ -115,4 +117,13 @@ body {
     box-shadow: none;
     transform: translateY(2px);
     border-bottom: 0px solid rgb(59, 40, 187);
+}
+
+.scores {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.25rem;
+    height: 38px;
 }

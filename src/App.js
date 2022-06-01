@@ -36,6 +36,12 @@ function App() {
         }
     },[dieValues, numberofRolls, isFirstPlay])
 
+    useEffect(() => {
+        window.onbeforeunload = function () {
+            return "Your scores will be lost if you leave the page, are you sure you want to refresh?"
+        }
+    }, [])
+
     // creating a brand new array of dice values containing properties of 
     // numerical value, toggle (locked) status, and an id used for a key 
     // and targeting to manipulate
@@ -59,7 +65,6 @@ function App() {
     function rollClickHandler() {
         
         setNumberOfRolls(prevRolls => prevRolls + 1)
-        console.log(numberofRolls)
 
         //declaratively
         setDieValues(prevState => prevState.map(die => {
@@ -138,7 +143,7 @@ function App() {
         <div className="App">
             <main className="game-wrapper">
                 <section className="game">
-                    {gameState && <ReactConfetti width="640px" height="640px" recycle={false}></ReactConfetti>}
+                    {gameState && <ReactConfetti width="640px" height="660px" recycle={false}></ReactConfetti>}
                     <h1 className="title">Tenzies</h1>
                     <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
                     <div className="dice-container">
@@ -153,6 +158,14 @@ function App() {
                         } : rollClickHandler}>
                             {gameState? "New Game" : "Roll"}
                     </button>
+                    <ul className="scores">
+                        <li className="rolls">Current number of rolls: {numberofRolls}</li>
+                        {
+                            isFirstPlay 
+                            ? null
+                            : <li className="rolls">Your best score: {localStorage.getItem('rolls')}</li>
+                        }
+                    </ul>
                 </section>
             </main>
         </div>
